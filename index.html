@@ -23,6 +23,74 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <!--
+      Opened straight off disk? Nothing below can load: browsers block ES
+      modules, Web Workers and fetch on file:// URLs, so the stylesheet, the
+      tokenizer and the dictionary all fail silently and the page comes up
+      blank. This notice is inline — styles and scripts included — because it
+      is the only thing on the page that can still render there. It says its
+      piece in both languages, since the i18n module is one of the things that
+      did not load.
+    -->
+    <div id="file-warning" hidden>
+      <style>
+        #file-warning {
+          font: 400 15px/1.6 system-ui, sans-serif;
+          max-width: 640px;
+          margin: 40px auto;
+          padding: 18px 20px;
+          color: #12171b;
+          background: #fff;
+          border: 1px solid #c3cdd2;
+          border-left: 4px solid #c4452f;
+        }
+        #file-warning h2 {
+          margin: 0 0 10px;
+          font-size: 17px;
+        }
+        #file-warning p {
+          margin: 0 0 10px;
+        }
+        #file-warning code {
+          font-family: ui-monospace, monospace;
+          font-size: 13.5px;
+          background: #e3e8ea;
+          padding: 1px 5px;
+        }
+        #file-warning hr {
+          border: 0;
+          border-top: 1px solid #c3cdd2;
+          margin: 16px 0;
+        }
+      </style>
+      <h2>需要用本地服务器打开</h2>
+      <p>
+        直接双击 <code>index.html</code> 是打不开的：浏览器禁止 <code>file://</code>
+        页面使用 ES 模块、Web Worker 和 <code>fetch</code>，而分词器和词典全靠这三样加载。
+      </p>
+      <p>
+        在项目目录里跑 <code>npm install</code>，然后 <code>npm run dev</code>，
+        打开它打印出来的地址即可。部署到 Cloudflare Pages 也可以。
+      </p>
+      <hr />
+      <h2>This page needs a local server</h2>
+      <p>
+        Opening <code>index.html</code> from disk cannot work: browsers block ES
+        modules, Web Workers and <code>fetch</code> on <code>file://</code> URLs,
+        and the tokenizer and dictionary need all three.
+      </p>
+      <p>
+        Run <code>npm install</code> and then <code>npm run dev</code> in the
+        project folder, and open the URL it prints. Deploying to Cloudflare Pages
+        works too.
+      </p>
+    </div>
+    <script>
+      if (location.protocol === "file:") {
+        document.getElementById("file-warning").hidden = false;
+      }
+    </script>
+
     <header class="masthead">
       <div class="wrap mast">
         <a class="brand" href="/">
