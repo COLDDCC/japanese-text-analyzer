@@ -1,0 +1,13 @@
+# Cloudflare Pages headers.
+#
+# kuromoji gunzips the .dat.gz dictionary files itself. If the edge serves them
+# as `Content-Encoding: gzip`, the browser decompresses them first and they
+# reach kuromoji already unpacked. Serving them as an opaque binary type keeps
+# the edge from touching the encoding; src/vendor/zlib-gunzip.js copes with it
+# either way, so a host that ignores these headers still works.
+/dict/kuromoji/*
+  Content-Type: application/octet-stream
+  Cache-Control: public, max-age=31536000, immutable
+
+/dict/jmdict/*
+  Cache-Control: public, max-age=604800

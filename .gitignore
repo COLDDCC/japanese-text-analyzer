@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Copied out of node_modules by scripts/prepare-kuromoji.mjs
+public/dict/kuromoji/

@@ -1,0 +1,31 @@
+{
+  "name": "wakachi",
+  "version": "1.0.0",
+  "description": "Paste Japanese text and see every word split out with its reading, dictionary form, part of speech and English meaning.",
+  "scripts": {
+    "dev": "npm run dict:kuromoji && vite",
+    "build": "npm run dict:kuromoji && vite build",
+    "preview": "vite preview",
+    "dict:kuromoji": "node scripts/prepare-kuromoji.mjs",
+    "dict:jmdict": "node --no-warnings scripts/build-dict.mjs",
+    "test": "node --no-warnings --test \"test/**/*.test.mjs\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COLDDCC/japanese-text-analyzer.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/COLDDCC/japanese-text-analyzer/issues"
+  },
+  "homepage": "https://github.com/COLDDCC/japanese-text-analyzer#readme",
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "kuromoji": "^0.1.2"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0"
+  },
+  "private": true,
+  "type": "module"
+}
