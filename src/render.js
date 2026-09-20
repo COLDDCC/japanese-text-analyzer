@@ -72,19 +72,15 @@ export function markSelected(container, index) {
   if (selected) selected.classList.add("is-selected");
 }
 
-function row(label, value, detail) {
-  const wrapper = el("div", "detail-row");
-  const dd = el("dd", "detail-row__value", value);
-  if (detail) dd.append(el("span", "detail-row__detail", detail));
-  wrapper.append(el("dt", "detail-row__label", label), dd);
+/** One labelled cell of the details grid, in the reference's cell style. */
+function cell(label, value, detail, japanese = false) {
+  const wrapper = el("div", "cell");
+  const dd = el("dd", japanese ? "jp" : null, value);
+  if (detail) dd.append(el("span", "cell__detail", detail));
+  wrapper.append(el("dt", null, label), dd);
   return wrapper;
 }
 
-/**
- * `matchedKey` is the writing the lookup actually hit, which is what the reader
- * saw in the text. Leading with it keeps 「こんにちは」 from being headed by its
- * seldom-used kanji form 今日は — that moves to a muted note beside it.
- */
 function entryNode(record, lang, matchedKey) {
   const entry = el("div", "entry");
   const head = el("div", "entry__head");
@@ -118,33 +114,38 @@ export function renderDetails(panel, token, result, lang) {
   }
   panel.append(header);
 
-  const facts = el("dl", "details__facts");
+  const cells = [];
   const base = token.basic_form && token.basic_form !== "*" ? token.basic_form : null;
   if (base && base !== token.surface_form) {
-    facts.append(row(t(lang, "baseForm"), `${token.surface_form} → ${base}`));
+    cells.push(cell(t(lang, "baseForm"), `${token.surface_form} → ${base}`, null, true));
   }
-  facts.append(row(t(lang, "partOfSpeech"), posLabel(token, lang), posPath(token)));
+  cells.push(cell(t(lang, "partOfSpeech"), posLabel(token, lang), posPath(token)));
   const conjugation = conjugationLabel(token, lang);
   if (conjugation) {
     const raw = token.conjugated_form;
-    facts.append(row(t(lang, "conjugation"), conjugation, raw === conjugation ? null : raw));
+    cells.push(cell(t(lang, "conjugation"), conjugation, raw === conjugation ? null : raw));
   }
+  // An odd cell out spans the row, so no cell is left with a dangling border.
+  if (cells.length % 2 === 1) cells.at(-1).classList.add("cell--wide");
+
+  const facts = el("dl", "details__facts");
+  facts.append(...cells);
   panel.append(facts);
 
   if (isFunctionWord(token)) {
-    panel.append(el("p", "details__note", t(lang, "functionWord")));
+    panel.append(el("p", "note", t(lang, "functionWord")));
     return;
   }
 
   if (!result) {
-    panel.append(el("p", "details__note", "…"));
+    panel.append(el("p", "note", "…"));
     return;
   }
 
   const meanings = el("section", "details__meanings");
   meanings.append(el("h3", "details__section-title", t(lang, "meanings")));
   if (!result.records.length) {
-    meanings.append(el("p", "details__note", t(lang, "noEntry")));
+    meanings.append(el("p", "details__note details__note--empty", t(lang, "noEntry")));
   } else {
     for (const record of result.records.slice(0, MAX_ENTRIES_SHOWN)) {
       meanings.append(entryNode(record, lang, result.key));

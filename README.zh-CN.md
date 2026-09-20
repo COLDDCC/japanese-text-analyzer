@@ -109,6 +109,20 @@ node scripts/build-dict.mjs --all   # 全量词典（约 19.1 万条，约 54MB�
 Wakachi 在解压前会检查 gzip magic bytes，所以两种情况都能跑——
 但换了新平台看到 `invalid gzip data`，就是这里的问题。
 
+## 设计
+
+视觉系统——方格纸底、直角卡片、Anybody 配 IBM Plex、蓝色管结构、绿色管确认、红色管警示——
+抄的是 [COLDDCC/design-reference](https://github.com/COLDDCC/design-reference)
+里的 `graph-paper-site`。
+
+有两处是改过的，不是照搬：
+
+- **字体改成自托管**，放在 `public/fonts/`，不走 Google Fonts。这个工具界面是中文的，
+  读者大概率在 `fonts.googleapis.com` 解析不了的地方；一个主打"纯静态、没有后端"的站，
+  不该因为一个 CDN 就垮掉。只带了 latin 子集（6 个字重共 165KB），中日文走系统字体。
+- **加了暗色模式。** 参考站只有亮色，所以暗色是把同一套系统换到夜里：结构不变，
+  三个强调色不变，只是不刺眼。
+
 ## v1 的已知限制
 
 - IPA 词典切得偏细，有些复合词会被拆开（「東京都庁」会散架），v1 接受这个限制。
@@ -133,5 +147,7 @@ Wakachi 在解压前会检查 gzip magic bytes，所以两种情况都能跑—�
   以 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 使用。
   `public/dict/jmdict/` 里的分片是它的衍生作品。
 - **kuromoji.js** 和它的 IPA 词典是 Apache 2.0。
+- `public/fonts/` 里的 **Anybody**、**IBM Plex Sans**、**IBM Plex Mono**
+  是 SIL Open Font License 1.1，见 `public/fonts/LICENSE.txt`。
 
 两者都在页脚署名了——许可证要求的就是这个，请保留。

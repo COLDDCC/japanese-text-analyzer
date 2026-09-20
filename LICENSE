@@ -33,4 +33,8 @@ builds and serves is licensed separately:
   * kuromoji.js and its IPA dictionary are licensed under the Apache License,
     Version 2.0.
 
+  * The typefaces in public/fonts/ — Anybody, IBM Plex Sans and IBM Plex Mono —
+    are licensed under the SIL Open Font License 1.1. See
+    public/fonts/LICENSE.txt.
+
 Both are credited in the page footer; please keep that attribution in place.

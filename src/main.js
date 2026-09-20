@@ -23,6 +23,8 @@ const dom = {
   detailsClose: document.getElementById("details-close"),
 };
 
+const languageButtons = document.querySelectorAll(".lang-toggle button");
+
 let lang = loadLanguage();
 let tokens = [];
 let selectedIndex = null;
@@ -87,7 +89,7 @@ function hideProgress() {
 function updateCharCount() {
   const length = dom.input.value.length;
   dom.charCount.textContent = t(lang, "charCount", length, MAX_CHARS);
-  dom.charCount.classList.toggle("char-count--over", length > MAX_CHARS);
+  dom.charCount.classList.toggle("is-over", length > MAX_CHARS);
 }
 
 function applyLanguage() {
@@ -95,8 +97,7 @@ function applyLanguage() {
   for (const node of document.querySelectorAll("[data-i18n]")) {
     node.textContent = t(lang, node.dataset.i18n);
   }
-  for (const button of document.querySelectorAll(".lang-toggle__button")) {
-    button.classList.toggle("is-active", button.dataset.lang === lang);
+  for (const button of languageButtons) {
     button.setAttribute("aria-pressed", String(button.dataset.lang === lang));
   }
   dom.input.placeholder = t(lang, "placeholder");
@@ -151,7 +152,7 @@ async function analyze() {
 
 function noteNode(text) {
   const p = document.createElement("p");
-  p.className = "details__note";
+  p.className = "note";
   p.textContent = text;
   return p;
 }
@@ -200,7 +201,7 @@ dom.input.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) void analyze();
 });
 
-for (const button of document.querySelectorAll(".lang-toggle__button")) {
+for (const button of languageButtons) {
   button.addEventListener("click", () => {
     if (!LANGUAGES.includes(button.dataset.lang)) return;
     lang = button.dataset.lang;

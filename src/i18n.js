@@ -3,7 +3,11 @@
 
 const STRINGS = {
   zh: {
+    eyebrow: "纯前端 · 免费 · 不用注册",
+    heading: "把日文拆成一个个词来读",
     tagline: "粘贴日语文本，逐词看读音、原形、词性和英文释义。",
+    inputLabel: "输入文本",
+    engine: "kuromoji IPA · JMdict",
     placeholder: "在这里粘贴日语文本…\n例：今日はご飯を食べに行きました",
     analyze: "分析",
     analyzing: "分析中…",
@@ -33,8 +37,12 @@ const STRINGS = {
       "词典数据：JMdict © EDRDG，CC BY-SA 4.0。分词：kuromoji.js，Apache 2.0。",
   },
   en: {
+    eyebrow: "Browser only · Free · No signup",
+    heading: "Japanese text, word by word",
     tagline:
       "Paste Japanese text and see every word's reading, dictionary form, part of speech and English meaning.",
+    inputLabel: "Input text",
+    engine: "kuromoji IPA · JMdict",
     placeholder: "Paste Japanese text here…\ne.g. 今日はご飯を食べに行きました",
     analyze: "Analyze",
     analyzing: "Analyzing…",

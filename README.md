@@ -123,6 +123,25 @@ unzips them first and kuromoji then chokes on plain data. Wakachi checks for
 the gzip magic bytes before unzipping, so it works either way — but if you see
 `invalid gzip data` on a new host, this is what to look at.
 
+## Design
+
+The visual system — the graph-paper field, the squared-off cards, Anybody over
+IBM Plex, blue for structure, green for confirmation, red for warnings — is
+taken from [COLDDCC/design-reference](https://github.com/COLDDCC/design-reference),
+specifically its `graph-paper-site` entry.
+
+Two things were adapted rather than copied:
+
+- **The typefaces are self-hosted**, in `public/fonts/`, instead of loaded from
+  Google Fonts. Readers of a Japanese-reading tool with a Chinese interface are
+  often somewhere `fonts.googleapis.com` does not resolve, and a site whose
+  whole premise is "static files, no backend" should not fall over on a CDN.
+  Only the latin subsets ship (165 KB for six faces); Japanese and Chinese fall
+  through to system fonts.
+- **Dark mode was added.** The reference is light-only, so the dark palette
+  reads the same system at night: the same structure, the same three accent
+  colours, less glare.
+
 ## Known limits in v1
 
 - The IPA dictionary splits some compounds finer than you might want
@@ -152,6 +171,8 @@ The data it serves is not:
   used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
   The shards in `public/dict/jmdict/` are a derivative of it.
 - **kuromoji.js** and its IPA dictionary are Apache 2.0.
+- **Anybody**, **IBM Plex Sans** and **IBM Plex Mono**, in `public/fonts/`, are
+  under the SIL Open Font License 1.1 — see `public/fonts/LICENSE.txt`.
 
 Both are credited in the page footer, which is how the licences ask to be
 honoured — please keep it there.
